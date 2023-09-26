@@ -58,6 +58,20 @@ function CitiesProvider({ children }) {
     }
   }
 
+  async function deleteCity(id) {
+    try {
+      setIsLoading(true);
+      await fetch(`${BASE_URL}/cities/${id}`, {
+        method: "DELETE",
+      });
+      // const data = await res.json();
+      setCities((cities) => cities.filter((city) => city.id !== id));
+    } catch {
+      alert("Something went wrong deleting the city");
+    } finally {
+      setIsLoading(false);
+    }
+  }
   return (
     <CitiesContex.Provider
       value={{
@@ -66,6 +80,7 @@ function CitiesProvider({ children }) {
         currentCity,
         getCity,
         createCity,
+        deleteCity,
       }}
     >
       {children}
